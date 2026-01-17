@@ -10,7 +10,6 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -45,7 +44,7 @@ function App() {
               />
 
               <motion.div
-                className="relative flex flex-col items-center"
+                className="relative flex flex-col items-center w-full px-4 text-center"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -54,7 +53,7 @@ function App() {
                 <motion.div
                   animate={{ 
                     y: [0, -15, 0],
-                    rotateY: [0, 15, 0] // Leve distorção 3D
+                    rotateY: [0, 15, 0] 
                   }}
                   transition={{ 
                     duration: 3, 
@@ -70,18 +69,22 @@ function App() {
                   />
                 </motion.div>
 
-                {/* Texto com Letter Spacing animado */}
+                {/* Texto Ajustado: menor no mobile (text-xl) e normal no desktop (md:text-5xl) */}
                 <motion.h1 
-                  className="text-white text-3xl md:text-5xl font-light tracking-[0.5em] uppercase"
+                  className="text-white text-xl md:text-5xl font-light uppercase whitespace-nowrap"
                   initial={{ letterSpacing: "0.2em", opacity: 0 }}
-                  animate={{ letterSpacing: "0.6em", opacity: 1 }}
+                  animate={{ 
+                    // No mobile usamos 0.3em e no desktop voltamos para 0.6em
+                    letterSpacing: window.innerWidth < 768 ? "0.3em" : "0.6em", 
+                    opacity: 1 
+                  }}
                   transition={{ duration: 1.5, ease: "easeOut" }}
                 >
                   Robson Machado
                 </motion.h1>
 
-                {/* Barra de progresso minimalista e bizarra */}
-                <div className="w-48 h-[1px] bg-white/20 mt-8 overflow-hidden relative">
+                {/* Barra de progresso */}
+                <div className="w-32 md:w-48 h-[1px] bg-white/20 mt-8 overflow-hidden relative">
                   <motion.div
                     className="absolute inset-0 bg-brown"
                     initial={{ left: "-100%" }}
