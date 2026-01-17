@@ -1,49 +1,72 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowUpRight } from 'lucide-react';
-import { Project } from '../types';
+import { X, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const projectsData: Project[] = [
+const projectsData = [
   {
     id: 1,
-    title: "Residencial Horizonte",
-    category: "Projetos de Engenharia",
-    image: "https://picsum.photos/800/600?random=1",
-    description: "Complexo residencial de alto padrão com 12 unidades. Estrutura em concreto armado aparente e integração total com a topografia do terreno.",
-    year: "2024",
-    location: "Fortaleza, CE"
+    title: "Residência de alto padrão",
+    category: "Projeto Arquitetônico Residencial",
+    images: ["/projetoferrari.jpeg", "/projetoferrari2.jpeg", "/projetoferrari3.jpeg"],
+    description: "Projeto residencial unifamiliar de linguagem contemporânea, com volumetria marcante, linhas retas e forte contraste de materiais. A proposta prioriza funcionalidade, conforto e estética, integrando garagem coberta, área social bem iluminada e suíte no pavimento superior com varanda. O uso de iluminação linear embutida valoriza a arquitetura e reforça a leitura noturna.",
   },
   {
     id: 2,
-    title: "Loft Industrial Athos",
-    category: "Design de Interiores",
-    image: "https://picsum.photos/800/600?random=2",
-    description: "Reforma completa de galpão industrial transformado em espaço corporativo. Foco em acústica e iluminação natural.",
-    year: "2023",
-    location: "Eusébio, CE"
+    title: "Beach Way Riviera",
+    category: "Projeto de automação",
+    images: ["/beachWay.jpeg"],
+    description: "Projeto de automação residencial de alto padrão, desenvolvido para integrar conforto, lazer e tecnologia à arquitetura contemporânea. A proposta valoriza a área de lazer com piscina como núcleo do ambiente, utilizando automação para controle inteligente de iluminação, ventilação e cenários, ampliando a experiência de uso, o bem-estar e a funcionalidade da residência.",
   },
   {
     id: 3,
-    title: "Clínica Vida & Saúde",
-    category: "Gerenciamento",
-    image: "https://picsum.photos/800/600?random=3",
-    description: "Gestão completa de obra hospitalar, cumprindo rigorosas normas da ANVISA e prazos apertados para inauguração.",
-    year: "2023",
-    location: "Sobral, CE"
+    title: "Condomínio",
+    category: "Desenho arquitetônico",
+    images: ["/apartamento.jpeg", "/basket.jpeg", "/interiordoapartamento.jpeg", "/piscinadoapartamento.jpeg", "/piscinadoapartamento2.jpeg", "/quadradoapartamento.jpeg"],
+    description: "Este projeto de condomínio foi desenvolvido como atividade prática de estágio na disciplina de Desenho Arquitetônico, abrangendo concepção, representação técnica e organização espacial.",
   },
   {
     id: 4,
-    title: "Casa Verano",
-    category: "Engenharia",
-    image: "https://picsum.photos/800/600?random=4",
-    description: "Projeto estrutural e hidrossanitário para residência de veraneio sustentável, com reaproveitamento de águas pluviais.",
-    year: "2022",
-    location: "Aquiraz, CE"
+    title: "Edifício Residencial Vertical de Alto Padrão",
+    category: "Projeto Arquitetônico Residencial Multifamiliar",
+    images: ["/predio.jpeg"],
+    description: "Projeto arquitetônico de edifício residencial vertical, com múltiplas unidades habitacionais distribuídas em pavimentos tipo. A proposta enfatiza fachada contemporânea, varandas contínuas, iluminação arquitetônica cênica, repetição modular e valorização urbana, com forte presença visual.",
+  },
+  {
+    id: 5,
+    title: "Pioneira Residencial",
+    category: "Projeto Arquitetônico de Condomínio Residencial",
+    images: ["/pioneira2.jpeg", "/pioneira1.jpeg", "/pioneira3.jpeg"],
+    description: "Projeto arquitetônico de um condomínio residencial, responsável pelo controle de acesso, identidade visual e primeira leitura arquitetônica do empreendimento. A proposta trabalha volumetria horizontal, materiais naturais, iluminação arquitetônica linear e transparência visual, equilibrando segurança, funcionalidade e presença institucional.",
+  },
+  {
+    id: 6,
+    title: "Residência Unifamiliar com Área de Lazer",
+    category: "Projeto Arquitetônico Residencial Unifamiliar",
+    images: ["/casinha.jpeg"],
+    description: "Projeto arquitetônico de residência unifamiliar de alto padrão, com foco em concepção espacial, volumetria contemporânea, integração interior–exterior, área de lazer com piscina e valorização da iluminação natural.",
   }
 ];
 
 const Projects: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedProject) return;
+    setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length);
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedProject) return;
+    setCurrentImageIndex((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length);
+  };
+
+  const closeModal = () => {
+    setSelectedProject(null);
+    setCurrentImageIndex(0);
+  };
 
   return (
     <section id="projetos" className="py-24 px-6 md:px-12">
@@ -64,13 +87,13 @@ const Projects: React.FC = () => {
               key={project.id}
               layoutId={`project-container-${project.id}`}
               onClick={() => setSelectedProject(project)}
-              className="group cursor-pointer relative aspect-[4/3] overflow-hidden rounded-sm"
+              className="group cursor-pointer relative aspect-[4/3] overflow-hidden rounded-sm bg-beige"
               whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <motion.img
                 layoutId={`project-image-${project.id}`}
-                src={project.image}
+                src={project.images[0]}
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0"
               />
@@ -92,12 +115,12 @@ const Projects: React.FC = () => {
 
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
+          <div className="fixed inset-0 z-[60] flex items-center justify-center px-4 overflow-hidden">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
+              onClick={closeModal}
               className="absolute inset-0 bg-dark-green/90 backdrop-blur-sm"
             />
             
@@ -105,19 +128,49 @@ const Projects: React.FC = () => {
               layoutId={`project-container-${selectedProject.id}`}
               className="relative w-full max-w-3xl bg-beige rounded-sm overflow-hidden shadow-2xl z-10 max-h-[90vh] flex flex-col"
             >
-              <div className="relative h-64 md:h-96 w-full">
-                <motion.img
-                  layoutId={`project-image-${selectedProject.id}`}
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative h-64 md:h-96 w-full group/modal overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImageIndex}
+                    // O pulo do gato: vincula a imagem do modal à do grid no fechamento
+                    layoutId={currentImageIndex === 0 ? `project-image-${selectedProject.id}` : undefined}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    src={selectedProject.images[currentImageIndex]}
+                    alt={selectedProject.title}
+                    className="w-full h-full object-cover"
+                  />
+                </AnimatePresence>
+
+                {selectedProject.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={handlePrev}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-dark-green/20 text-white rounded-full hover:bg-dark-green/50 transition-colors backdrop-blur-md z-30"
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-dark-green/20 text-white rounded-full hover:bg-dark-green/50 transition-colors backdrop-blur-md z-30"
+                    >
+                      <ChevronRight size={24} />
+                    </button>
+                    
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-dark-green/40 backdrop-blur-md rounded-full text-[10px] text-white tracking-widest uppercase z-30">
+                      {currentImageIndex + 1} / {selectedProject.images.length}
+                    </div>
+                  </>
+                )}
+
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedProject(null);
+                    closeModal();
                   }}
-                  className="absolute top-4 right-4 p-2 bg-beige/80 text-dark-green rounded-full hover:bg-white transition-colors"
+                  className="absolute top-4 right-4 p-2 bg-beige/80 text-dark-green rounded-full hover:bg-white transition-colors z-40"
                 >
                   <X size={24} />
                 </button>
@@ -126,10 +179,6 @@ const Projects: React.FC = () => {
               <div className="p-8 md:p-12 overflow-y-auto">
                 <div className="flex flex-wrap gap-4 text-xs uppercase tracking-widest text-brown mb-4">
                    <span>{selectedProject.category}</span>
-                   <span>•</span>
-                   <span>{selectedProject.year}</span>
-                   <span>•</span>
-                   <span>{selectedProject.location}</span>
                 </div>
                 
                 <h3 className="text-3xl md:text-4xl font-bold text-dark-green mb-6">{selectedProject.title}</h3>
@@ -140,9 +189,6 @@ const Projects: React.FC = () => {
 
                 <div className="pt-8 border-t border-dark-green/10 flex justify-between items-center">
                    <span className="text-dark-green/50 text-sm">Robson Machado Engenharia</span>
-                   <button className="text-dark-green font-semibold hover:text-brown transition-colors">
-                     Ver detalhes técnicos
-                   </button>
                 </div>
               </div>
             </motion.div>

@@ -5,9 +5,9 @@ import { ExperienceItem } from '/types';
 const experiences: ExperienceItem[] = [
   { company: "AF Engenharia", role: "Engenharia Civil" },
   { company: "Stager Automações", role: "Gestão de Projetos" },
-  { company: "Athos", role: "Execução de Obras" },
+  { company: "Athos Construções", role: "Execução de Obras" },
   { company: "Obra Bossa Nova", role: "Supervisão Técnica" },
-  { company: "Forms Engenharia", role: "Projetos Complementares" },
+  { company: "Formas Engenharia", role: "Projetos Complementares" },
   { company: "Alves Mendes Construções", role: "Planejamento" },
 ];
 
@@ -25,17 +25,20 @@ const About: React.FC = () => {
             <span className="text-brown font-bold tracking-widest uppercase text-sm mb-2 block">Sobre o Profissional</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Experiência sólida,<br />visão moderna.</h2>
             
-            <div className="space-y-6 text-beige/70 text-lg leading-relaxed font-light">
+            <div className="space-y-4 text-beige/70 text-lg leading-relaxed font-light">
               <p>
-                Com formação em Tecnologia da Construção pelo IFCE, minha trajetória é marcada pela união entre a precisão técnica e a capacidade de gestão.
+                Formado em Tecnologia da Construção pelo IFCE, atuo na convergência entre precisão técnica e gestão eficiente.
               </p>
+
               <p>
-                Iniciei como projetista de AutoCAD e Revit, evoluindo naturalmente para o universo 3D com SketchUp e renderização. Essa base projetual me deu uma visão única para a execução em canteiro de obras.
+                Minha base em projetos técnicos e modelagem 3D me proporciona leitura estratégica do projeto à execução.
               </p>
+
               <p>
-                Atuei como gerente de projetos em automação residencial, o que refinou minha atenção aos detalhes e tecnologias integradas. Hoje, aplico toda essa bagagem para entregar obras que são sinônimo de excelência.
+                Com experiência em gestão e automação residencial, entrego obras focadas em qualidade, controle e excelência.
               </p>
             </div>
+
           </motion.div>
         </div>
 

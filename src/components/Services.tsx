@@ -1,24 +1,53 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Ruler, Home, ClipboardCheck } from 'lucide-react';
+import {
+  Ruler,
+  Building2,
+  Home,
+  Droplets,
+  Waves,
+  ClipboardList
+} from 'lucide-react';
 
 const services = [
   {
     icon: Ruler,
-    title: "Projetos de Engenharia",
-    description: "Desenvolvimento técnico detalhado, cálculo estrutural e planejamento executivo com foco em segurança e otimização."
+    title: "Projeto Arquitetônico",
+    description:
+      "Criação de projetos arquitetônicos completos, com estudo de layout, volumetria e soluções técnicas que aliam estética, conforto e viabilidade construtiva."
+  },
+  {
+    icon: Building2,
+    title: "Projeto Executivo e Projeto Legal",
+    description:
+      "Elaboração detalhada para aprovação em órgãos competentes e execução da obra, garantindo conformidade legal, precisão técnica e redução de retrabalhos."
   },
   {
     icon: Home,
-    title: "Design de Interiores",
-    description: "Harmonização de espaços unindo estética refinada e funcionalidade prática para ambientes residenciais e comerciais."
+    title: "Projeto de Automação Residencial",
+    description:
+      "Planejamento de automação inteligente para residências, integrando iluminação, segurança e conforto com soluções modernas e eficientes."
   },
   {
-    icon: ClipboardCheck,
-    title: "Gerenciamento de Obras",
-    description: "Supervisão rigorosa, controle de cronograma e gestão de custos para garantir a entrega perfeita do seu empreendimento."
+    icon: Droplets,
+    title: "Projeto Hidráulico",
+    description:
+      "Dimensionamento e planejamento de sistemas hidráulicos eficientes, assegurando pressão adequada, economia de água e desempenho confiável."
+  },
+  {
+    icon: Waves,
+    title: "Projeto Hidrossanitário",
+    description:
+      "Desenvolvimento de sistemas de esgoto e drenagem conforme normas técnicas, garantindo segurança sanitária e funcionamento duradouro da edificação."
+  },
+  {
+    icon: ClipboardList,
+    title: "Gestão e Acompanhamento de Obras",
+    description:
+      "Controle técnico da obra com acompanhamento de cronograma, custos e qualidade, assegurando execução fiel ao projeto e previsibilidade total."
   }
 ];
+
 
 const Services: React.FC = () => {
   return (

@@ -16,7 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000); // Aumentei um pouco para a animação brilhar
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -27,7 +27,7 @@ function App() {
           {loading ? (
             <motion.div
               key="loader"
-              className="fixed inset-0 z-[100] flex items-center justify-center bg-dark-green" // Fundo escuro para contraste
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-dark-green"
               exit={{ 
                 y: "-100vh",
                 transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
@@ -64,7 +64,7 @@ function App() {
                   className="relative z-10 mb-6"
                 >
                   <img 
-                    src="./public/logorobsonmachado.png" 
+                    src="/logorobsonmachado.png" 
                     alt="logo" 
                     className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]" 
                   />

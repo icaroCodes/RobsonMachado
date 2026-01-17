@@ -21,6 +21,12 @@ const Footer = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
+  const socialLinks = [
+  { Icon: Instagram, href: "https://www.instagram.com/robsonmachado.eng/", label: "Instagram" },
+  { Icon: Linkedin, href: "https://www.linkedin.com/in/robson-iago-borges-machado-653281346/", label: "LinkedIn" },
+  { Icon: Mail, href: "mailto:robsoniago.machado@gmail.com", label: "Email" },
+];
+
   return (
     <footer className="relative bg-dark-green pt-32 pb-12 px-6 overflow-hidden">
       
@@ -74,36 +80,61 @@ const Footer = () => {
 
           {/* Coluna 2: Links Rápidos */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <h3 className="text-beige/20 text-xs uppercase tracking-[0.3em] font-bold">Menu</h3>
-            <ul className="space-y-3">
-              {['Projetos', 'Metodologia', 'Sobre nós', 'Contato'].map((item) => (
-                <li key={item}>
-                  <a href={`#${item}`} className="text-beige/60 hover:text-brown text-sm font-light transition-all flex items-center group">
-                    <span className="w-0 group-hover:w-4 h-[1px] bg-brown mr-0 group-hover:mr-2 transition-all"></span>
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+  <h3 className="text-beige/20 text-xs uppercase tracking-[0.3em] font-bold">Menu</h3>
+  <ul className="space-y-3">
+    {[
+      { label: 'Serviços', path: 'servicos' },
+      { label: 'Diferenciais', path: 'diferenciais' },
+      { label: 'Projetos', path: 'projetos' },
+      { label: 'Sobre', path: 'sobre' },
+      { label: 'Contato', path: 'contato' }
+    ].map((item) => (
+      <li key={item.path}>
+        <a 
+          href={`#${item.path}`} 
+          className="text-beige/60 hover:text-brown text-sm font-light transition-all flex items-center group"
+        >
+          {/* Linha animada do hover */}
+          <span className="w-0 group-hover:w-4 h-[1px] bg-brown mr-0 group-hover:mr-2 transition-all duration-300"></span>
+          
+          <motion.span
+            whileHover={{ x: 5 }} // Pequeno deslocamento lateral imersivo
+            className="inline-block"
+          >
+            {item.label}
+          </motion.span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</motion.div>
 
           {/* Coluna 3: Social & Action */}
           <motion.div variants={itemVariants} className="space-y-8 md:text-right flex flex-col md:items-end">
              <div className="space-y-4">
-                <h3 className="text-beige/20 text-xs uppercase tracking-[0.3em] font-bold">Conectar</h3>
-                <div className="flex gap-4 justify-start md:justify-end">
-                  {[Instagram, Linkedin, Mail].map((Icon, i) => (
-                    <motion.a
-                      key={i}
-                      whileHover={{ scale: 1.2, rotate: 5, color: '#A67C52' }}
-                      className="text-beige/40 transition-colors"
-                      href="#"
-                    >
-                      <Icon size={20} />
-                    </motion.a>
-                  ))}
-                </div>
-             </div>
+      <h3 className="text-beige/20 text-xs uppercase tracking-[0.3em] font-bold">Conectar</h3>
+      <div className="flex gap-4 justify-start md:justify-end">
+        {socialLinks.map(({ Icon, href, label }, i) => (
+          <motion.a
+            key={i}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            whileHover={{ 
+              scale: 1.2, 
+              rotate: 5, 
+              color: '#A67C52',
+              filter: "drop-shadow(0px 0px 8px rgba(166, 124, 82, 0.5))" 
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="text-beige/40 transition-colors cursor-pointer"
+          >
+            <Icon size={20} />
+          </motion.a>
+        ))}
+      </div>
+    </div>
 
              <motion.button 
                 whileHover={{ scale: 1.05 }}
@@ -130,7 +161,7 @@ const Footer = () => {
           
           <div className="flex items-center gap-2 group">
              <span className="opacity-50">Criado por</span>
-             <a href="#" className="text-beige/40 group-hover:text-brown transition-colors">
+             <a href="https://github.com/IcaroCodes" className="text-beige/40 group-hover:text-brown transition-colors">
                 IcaroCodes <span className="inline-block group-hover:rotate-45 transition-transform">↗</span>
              </a>
           </div>

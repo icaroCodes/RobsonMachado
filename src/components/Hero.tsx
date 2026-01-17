@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
         </motion>
         
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-dark-green leading-[1.1] tracking-tight">
-            Transforme Suas <br/>
+            Transforme suas <br/>
             <span className="text-brown italic">ideias</span> em <span className="text-brown italic">realidade</span>.
           </h2>
           <p className="text-lg md:text-xl text-dark-green/70 max-w-2xl mx-auto font-light leading-relaxed">
@@ -65,22 +65,28 @@ const Hero: React.FC = () => {
             <div className="absolute inset-0 bg-brown transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 ease-out" />
           </a>
           
-          <button 
-            className="group px-8 py-4 bg-transparent border border-dark-green text-dark-green font-semibold rounded-full hover:bg-dark-green/5 transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2"
-            onClick={() => alert('Download do CV simulado iniciado')}
-          >
-            <span>Baixar CV</span>
-            <Download className="w-4 h-4" />
-          </button>
+          <a 
+  href="/curriculo.pdf" 
+  download="curriculorobsonmachado.pdf"
+  className="group px-8 py-4 bg-transparent border border-dark-green text-dark-green font-semibold rounded-full hover:bg-dark-green/10 transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 relative overflow-hidden backdrop-blur-sm"
+>
+  {/* Efeito de brilho sutil no hover (Vibe Soumyajit) */}
+  <span className="absolute inset-0 bg-dark-green/5 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300"></span>
+  
+  <span className="relative z-10">Baixar CV</span>
+  <Download className="w-4 h-4 relative z-10 group-hover:translate-y-1 transition-transform duration-300" />
+</a>
+            
+          
         </motion.div>
 
         <motion.div 
   whileHover={{ perspective: 1000 }}
   className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-24 pt-16 border-t border-dark-green/5"
 >
-  <Counter value={5} label="Anos de Experiência" suffix='+'/>
+  <Counter value={4} label="Anos de Experiência" />
   <Counter value={50} label="Projetos Entregues" suffix="+" />
-  <Counter value={25} label="Clientes Satisfeitos" suffix="+" />
+  <Counter value={50} label="Clientes Satisfeitos" suffix="+" />
 </motion.div>
       </div>
 
