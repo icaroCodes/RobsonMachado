@@ -53,19 +53,19 @@ const Hero: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Botões Mobile "Premium" */}
+        {/* Botões Mobile "Premium" - Agora menos esticados no mobile */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
+          className="flex flex-row items-center justify-center gap-3 md:gap-4 px-2 sm:px-4"
         >
           <a 
             href="https://wa.me/558594069922?text=Olá!%20Vim%20pelo%20seu%20site."
-            className="group relative w-full sm:w-auto px-10 py-4 bg-dark-green text-white text-sm md:text-base font-bold rounded-xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(26,46,36,0.3)] hover:shadow-dark-green/20 transition-all duration-500 flex items-center justify-center gap-3 active:scale-95"
+            className="group relative px-6 md:px-10 py-3 md:py-4 bg-dark-green text-white text-[11px] sm:text-sm md:text-base font-bold rounded-xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(26,46,36,0.3)] hover:shadow-dark-green/20 transition-all duration-500 flex items-center justify-center gap-2 md:gap-3 active:scale-95 whitespace-nowrap"
           >
-            <span className="relative z-10">Solicitar Orçamento</span>
-            <MessageSquare className="w-4 h-4 relative z-10 group-hover:rotate-12 transition-transform" />
+            <span className="relative z-10">Orçamento</span>
+            <MessageSquare className="w-3.5 h-3.5 md:w-4 md:h-4 relative z-10 group-hover:rotate-12 transition-transform" />
             <div className="absolute inset-0 bg-gradient-to-r from-brown to-dark-green opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {/* Glossy Effect */}
             <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white/10 opacity-40 group-hover:animate-shine" />
@@ -74,10 +74,10 @@ const Hero: React.FC = () => {
           <a 
             href="/curriculo.pdf" 
             download="curriculorobsonmachado.pdf"
-            className="group w-full sm:w-auto px-10 py-4 bg-white border border-dark-green/10 text-dark-green text-sm md:text-base font-bold rounded-xl hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden shadow-sm active:scale-95"
+            className="group px-6 md:px-10 py-3 md:py-4 bg-white border border-dark-green/10 text-dark-green text-[11px] sm:text-sm md:text-base font-bold rounded-xl hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 relative overflow-hidden shadow-sm active:scale-95 whitespace-nowrap"
           >
-            <span className="relative z-10">Ver Portfólio</span>
-            <Download className="w-4 h-4 relative z-10 group-hover:translate-y-1 transition-transform duration-300" />
+            <span className="relative z-10">Portfólio</span>
+            <Download className="w-3.5 h-3.5 md:w-4 md:h-4 relative z-10 group-hover:translate-y-1 transition-transform duration-300" />
             <div className="absolute inset-0 bg-dark-green/5 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500" />
           </a>
         </motion.div>

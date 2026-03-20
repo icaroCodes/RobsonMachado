@@ -54,7 +54,7 @@ const Services: React.FC = () => {
     <section id="servicos" className="py-24 px-6 md:px-12 bg-white/30">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 md:mb-24 text-center md:text-left">
-          <motion.h3 
+          <motion.h3
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -62,7 +62,7 @@ const Services: React.FC = () => {
           >
             Especialidades
           </motion.h3>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -73,21 +73,21 @@ const Services: React.FC = () => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className="group p-8 border border-dark-green/10 bg-beige hover:bg-white transition-colors duration-500 rounded-sm"
+              transition={{ delay: index * 0.1 }}
+              className="group p-4 sm:p-6 lg:p-8 border border-dark-green/10 bg-beige hover:bg-white transition-colors duration-500 rounded-sm flex flex-col items-center text-center sm:items-start sm:text-left"
             >
-              <div className="mb-6 inline-block p-4 bg-dark-green text-beige rounded-full group-hover:bg-brown transition-colors duration-300">
-                <service.icon size={24} strokeWidth={1.5} />
+              <div className="mb-4 sm:mb-6 inline-block p-3 sm:p-4 bg-dark-green text-beige rounded-full group-hover:bg-brown transition-colors duration-300">
+                <service.icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
               </div>
-              <h4 className="text-xl font-bold text-dark-green mb-4">{service.title}</h4>
-              <p className="text-dark-green/70 leading-relaxed text-sm md:text-base">
+              <h4 className="text-xs sm:text-lg lg:text-xl font-bold text-dark-green mb-2 sm:mb-4 line-clamp-2 min-h-[2.5rem] lg:min-h-0">{service.title}</h4>
+              <p className="text-dark-green/70 leading-relaxed text-[10px] sm:text-sm lg:text-base line-clamp-4 sm:line-clamp-none">
                 {service.description}
               </p>
             </motion.div>

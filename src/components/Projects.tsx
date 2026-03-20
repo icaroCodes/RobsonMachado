@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAnimationLevel } from '../contexts/AnimationContext';
@@ -52,6 +52,20 @@ const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { level } = useAnimationLevel();
+
+  // Bloquear scroll quando o modal estiver aberto
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    // Cleanup ao desmontar o componente
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProject]);
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -129,13 +143,13 @@ const Projects: React.FC = () => {
             
             <motion.div
               layoutId={level === 'high' ? `project-container-${selectedProject.id}` : undefined}
-              initial={level !== 'high' ? { opacity: 0, scale: 0.95, y: 20 } : false}
+              initial={level !== 'high' ? { opacity: 0, scale: 0.9, y: 20 } : false}
               animate={level !== 'high' ? { opacity: 1, scale: 1, y: 0 } : false}
-              exit={level !== 'high' ? { opacity: 0, scale: 0.95, y: 20 } : false}
+              exit={level !== 'high' ? { opacity: 0, scale: 0.9, y: 20 } : false}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className={`relative w-full max-w-3xl bg-beige rounded-sm overflow-hidden z-10 max-h-[90vh] flex flex-col ${level === 'high' ? 'shadow-2xl' : 'shadow-xl'}`}
+              className={`relative w-[92%] sm:w-full max-w-3xl bg-beige rounded-2xl overflow-hidden z-10 max-h-[85vh] flex flex-col ${level === 'high' ? 'shadow-2xl' : 'shadow-xl'}`}
             >
-              <div className="relative h-64 md:h-96 w-full group/modal overflow-hidden">
+              <div className="relative h-48 sm:h-64 md:h-96 w-full group/modal overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentImageIndex}
