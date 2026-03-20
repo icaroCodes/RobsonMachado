@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useAnimationLevel } from '../contexts/AnimationContext';
 
 const testimonials = [
   {
@@ -40,6 +41,8 @@ const PremiumCarousel: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  const { level } = useAnimationLevel();
+
   // Auto-play suave (opcional, pode remover se preferir controle manual total)
   useEffect(() => {
     const timer = setInterval(() => {
@@ -49,12 +52,11 @@ const PremiumCarousel: React.FC = () => {
   }, [current]);
 
   const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 100 : -100,
-      opacity: 0,
-      scale: 0.95,
-      filter: "blur(10px)",
-    }),
+    enter: (direction: number) => {
+      if (level === 'high') return { x: direction > 0 ? 100 : -100, opacity: 0, scale: 0.95, filter: "blur(10px)" };
+      if (level === 'medium') return { x: direction > 0 ? 50 : -50, opacity: 0, scale: 0.98 };
+      return { opacity: 0 };
+    },
     center: {
       zIndex: 1,
       x: 0,
@@ -62,21 +64,19 @@ const PremiumCarousel: React.FC = () => {
       scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1], // Apple-esque ease (easeOutExpo ish)
-      },
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 100 : -100,
-      opacity: 0,
-      scale: 0.95,
-      filter: "blur(10px)",
-      transition: {
-        duration: 0.6,
+        duration: level === 'high' ? 0.8 : 0.4,
         ease: [0.16, 1, 0.3, 1],
       },
-    }),
+    },
+    exit: (direction: number) => {
+      if (level === 'high') {
+        return { zIndex: 0, x: direction < 0 ? 100 : -100, opacity: 0, scale: 0.95, filter: "blur(10px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } };
+      }
+      if (level === 'medium') {
+        return { zIndex: 0, x: direction < 0 ? 50 : -50, opacity: 0, scale: 0.98, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } };
+      }
+      return { zIndex: 0, opacity: 0, transition: { duration: 0.3 } };
+    },
   };
 
   const next = () => {
@@ -91,28 +91,19 @@ const PremiumCarousel: React.FC = () => {
 
   return (
     <section className="relative py-32 bg-[#050505] overflow-hidden">
-      {/* --- AMBIENT LIGHTING (3D ILLUSION) --- */}
+      {/* --- AMBIENT LIGHTING (ADAPTIVE) --- */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Orb 1 - Movimento lento e orgânico */}
-        <motion.div 
-          animate={{ 
-            x: [0, 100, -50, 0], 
-            y: [0, -50, 50, 0],
-            scale: [1, 1.2, 0.9, 1]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-neutral-800/20 rounded-full blur-[120px]" 
-        />
-        {/* Orb 2 - Accent Light (Dourado/Bronze muito sutil) */}
-        <motion.div 
-          animate={{ 
-            x: [0, -70, 30, 0], 
-            y: [0, 60, -40, 0],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#AD8B73]/10 rounded-full blur-[140px]" 
-        />
+        {level === 'high' ? (
+          <>
+            <motion.div animate={{ x: [0, 100, -50, 0], y: [0, -50, 50, 0], scale: [1, 1.2, 0.9, 1] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-neutral-800/20 rounded-full blur-[120px]" />
+            <motion.div animate={{ x: [0, -70, 30, 0], y: [0, 60, -40, 0], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }} className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#AD8B73]/10 rounded-full blur-[140px]" />
+          </>
+        ) : level === 'medium' ? (
+          <>
+            <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-neutral-800/10 rounded-full blur-[80px]" />
+            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#AD8B73]/10 rounded-full blur-[100px]" />
+          </>
+        ) : null}
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-12 md:gap-24">
@@ -184,8 +175,12 @@ const PremiumCarousel: React.FC = () => {
               exit="exit"
               className="absolute inset-0"
             >
-              {/* Cartão Glassmorphism Premium */}
-              <div className="h-full w-full relative bg-neutral-900/40 backdrop-blur-2xl border border-white/5 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/50 flex flex-col justify-between overflow-hidden group hover:border-white/10 transition-colors duration-500">
+              {/* Adaptive Background Card */}
+              <div className={`h-full w-full relative border border-white/5 rounded-2xl p-8 md:p-12 flex flex-col justify-between overflow-hidden group hover:border-white/10 transition-colors duration-500
+                ${level === 'high' ? 'bg-neutral-900/40 backdrop-blur-2xl shadow-2xl shadow-black/50' 
+                   : level === 'medium' ? 'bg-neutral-900/60 backdrop-blur-md shadow-xl shadow-black/30'
+                   : 'bg-neutral-900/90 shadow-lg shadow-black/20'}
+              `}>
                 
                 {/* Efeito de brilho ao passar o mouse (Gradient Shine) */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />

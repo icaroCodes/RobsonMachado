@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useAnimationLevel } from '../contexts/AnimationContext';
 
 const projectsData = [
   {
@@ -50,6 +51,7 @@ const projectsData = [
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { level } = useAnimationLevel();
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -85,14 +87,14 @@ const Projects: React.FC = () => {
           {projectsData.map((project) => (
             <motion.div
               key={project.id}
-              layoutId={`project-container-${project.id}`}
+              layoutId={level === 'high' ? `project-container-${project.id}` : undefined}
               onClick={() => setSelectedProject(project)}
               className="group cursor-pointer relative aspect-[4/3] overflow-hidden rounded-sm bg-beige"
               whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.img
-                layoutId={`project-image-${project.id}`}
+                layoutId={level === 'high' ? `project-image-${project.id}` : undefined}
                 src={project.images[0]}
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0"
@@ -120,24 +122,28 @@ const Projects: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-dark-green/90 backdrop-blur-sm"
+              className={`absolute inset-0 ${level === 'high' ? 'bg-dark-green/90 backdrop-blur-sm' : 'bg-dark-green/95'}`}
             />
             
             <motion.div
-              layoutId={`project-container-${selectedProject.id}`}
-              className="relative w-full max-w-3xl bg-beige rounded-sm overflow-hidden shadow-2xl z-10 max-h-[90vh] flex flex-col"
+              layoutId={level === 'high' ? `project-container-${selectedProject.id}` : undefined}
+              initial={level !== 'high' ? { opacity: 0, scale: 0.95, y: 20 } : false}
+              animate={level !== 'high' ? { opacity: 1, scale: 1, y: 0 } : false}
+              exit={level !== 'high' ? { opacity: 0, scale: 0.95, y: 20 } : false}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className={`relative w-full max-w-3xl bg-beige rounded-sm overflow-hidden z-10 max-h-[90vh] flex flex-col ${level === 'high' ? 'shadow-2xl' : 'shadow-xl'}`}
             >
               <div className="relative h-64 md:h-96 w-full group/modal overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentImageIndex}
-                    // O pulo do gato: vincula a imagem do modal à do grid no fechamento
-                    layoutId={currentImageIndex === 0 ? `project-image-${selectedProject.id}` : undefined}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    layoutId={level === 'high' && currentImageIndex === 0 ? `project-image-${selectedProject.id}` : undefined}
+                    initial={level !== 'high' ? { opacity: 0 } : false}
+                    animate={level !== 'high' ? { opacity: 1 } : false}
+                    exit={level !== 'high' ? { opacity: 0 } : false}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                     src={selectedProject.images[currentImageIndex]}
                     alt={selectedProject.title}
                     className="w-full h-full object-cover"
@@ -148,18 +154,18 @@ const Projects: React.FC = () => {
                   <>
                     <button
                       onClick={handlePrev}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-dark-green/20 text-white rounded-full hover:bg-dark-green/50 transition-colors backdrop-blur-md z-30"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-dark-green/50 text-white rounded-full hover:bg-dark-green/80 transition-colors z-30"
                     >
                       <ChevronLeft size={24} />
                     </button>
                     <button
                       onClick={handleNext}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-dark-green/20 text-white rounded-full hover:bg-dark-green/50 transition-colors backdrop-blur-md z-30"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-dark-green/50 text-white rounded-full hover:bg-dark-green/80 transition-colors z-30"
                     >
                       <ChevronRight size={24} />
                     </button>
                     
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-dark-green/40 backdrop-blur-md rounded-full text-[10px] text-white tracking-widest uppercase z-30">
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-dark-green/80 rounded-full text-[10px] text-white tracking-widest uppercase z-30">
                       {currentImageIndex + 1} / {selectedProject.images.length}
                     </div>
                   </>

@@ -96,20 +96,17 @@ const Header: React.FC<HeaderProps> = ({ isMenuOpen, setIsMenuOpen }) => {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-[90] bg-white md:hidden flex flex-col justify-center px-10"
           >
-            {/* Background Decorativo Sutil */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-[0.02] pointer-events-none">
-              <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-black rounded-full blur-[100px]" />
-            </div>
+            {/* Background decorativo com blur removido para otimizar a performance (reduz stuttering no mobile) */}
 
             <nav className="flex flex-col space-y-8 relative z-10">
               {links.map((link, i) => (
                 <motion.a
-                  initial={{ x: 50, opacity: 0 }}
+                  initial={{ x: 30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+                  transition={{ delay: 0.1 + i * 0.05, duration: 0.4, ease: "easeOut" }}
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
@@ -122,9 +119,9 @@ const Header: React.FC<HeaderProps> = ({ isMenuOpen, setIsMenuOpen }) => {
 
               {/* CTA Adicional no Mobile */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.4, duration: 0.4, ease: "easeOut" }}
                 className="pt-10"
               >
                 <a
