@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ isMenuOpen, setIsMenuOpen }) => {
               ROBSON
             </h1>
             <span className="text-[9px] tracking-[0.3em] uppercase text-black/50 block mt-1">
-              Engenharia Civil
+              Projetos e Construções
             </span>
           </motion.div>
 

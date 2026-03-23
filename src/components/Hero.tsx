@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
           <motion.div variants={itemVariants} className="mb-6 md:mb-8">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-dark-green/10 bg-white/40 backdrop-blur-md text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-dark-green/80 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-brown animate-ping" />
-              Robson Machado • Engenharia Civil
+              Robson Machado • Projetos e Construções
             </span>
           </motion.div>
           
